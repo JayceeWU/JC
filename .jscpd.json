@@ -1,0 +1,23 @@
+{
+  "threshold": 0,
+  "minLines": 5,
+  "minTokens": 50,
+  "reporters": ["console", "html"],
+  "absolute": true,
+  "output": "copypaste",
+  "ignore": [
+    "**/node_modules/**",
+    "**/.git/**",
+    "**/.next/**",
+    "**/copypaste/**",
+    "**/public/**",
+    "**/.github/**",
+    "**/.agents/**",
+    "**/package-lock.json",
+    "**/*.config.*",
+    "**/*.json",
+    "**/*.md",
+    "**/*.yml",
+    "**/*.yaml"
+  ]
+}
