@@ -40,7 +40,7 @@
   }
 
   body {
-    @apply min-h-screen overflow-x-auto bg-background font-sans text-foreground antialiased;
+    @apply min-h-screen overflow-x-hidden bg-background font-sans text-foreground antialiased;
     padding-left: env(safe-area-inset-left);
     padding-right: env(safe-area-inset-right);
     background-image:
@@ -82,7 +82,96 @@
   }
 
   .section-anchor {
+    scroll-margin-top: calc(4rem + env(safe-area-inset-top));
+  }
+
+  .mobile-site-header {
+    opacity: 0;
+    padding-top: env(safe-area-inset-top);
+    pointer-events: none;
+    transition: opacity 240ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .mobile-site-header[data-visible="true"] {
+    opacity: 1;
+  }
+
+  .mobile-site-header[data-reveal-with-drawer="true"] {
+    opacity: 1;
+    transition: none;
+  }
+
+  .mobile-site-header[data-interactive="true"] {
+    pointer-events: auto;
+  }
+
+  .mobile-portfolio-shell[data-scroll-guard-active="true"] {
+    touch-action: none;
+  }
+
+  .mobile-profile-surface {
+    padding-top: calc(2.25rem + env(safe-area-inset-top));
+  }
+
+  .mobile-profile-toggle {
+    top: calc(0.75rem + env(safe-area-inset-top));
+  }
+
+  .mobile-context-drawer {
+    opacity: 0.98;
+    transform: translateY(-100%);
+    transition:
+      opacity 420ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
+  }
+
+  .mobile-context-drawer[data-expanded="true"] {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .mobile-context-drawer[data-instant="true"] {
+    transition: none;
+  }
+
+  .mobile-portfolio-content {
+    overflow-anchor: none;
+    transform: translateY(0);
+    transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
+  }
+
+  .mobile-portfolio-content[data-drawer-expanded="true"] {
+    transform: translateY(
+      max(
+        0px,
+        calc(
+          var(--mobile-context-drawer-space, 0px) -
+            var(--mobile-header-space, 64px)
+        )
+      )
+    );
+  }
+
+  .mobile-portfolio-content[data-drawer-instant="true"] {
+    transition: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-anchor {
     scroll-margin-top: 2rem;
+  }
+
+  .mobile-portfolio-content {
+    transform: none;
+  }
+}
+
+@media (pointer: coarse) {
+  .pointer-glow {
+    display: none;
   }
 }
 
@@ -106,5 +195,14 @@
       hsl(var(--primary) / 0.08),
       transparent 48%
     );
+  }
+
+  .mobile-context-drawer,
+  .mobile-portfolio-content {
+    transition: none;
+  }
+
+  .mobile-site-header {
+    transition: none;
   }
 }
