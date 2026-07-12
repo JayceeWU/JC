@@ -1,50 +1,31 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { createContext, useContext, useMemo } from "react";
 import { cn } from "@/lib/utils";
 
-const defaultSection = "about";
+const SectionNavContext = createContext(null);
 
-export function SectionNav({ navigation }) {
-  const [activeSection, setActiveSection] = useState(defaultSection);
+export function SectionNavProvider({ activeSection, activateSection, children }) {
+  const value = useMemo(
+    () => ({ activeSection, activateSection }),
+    [activateSection, activeSection]
+  );
 
-  const activateSection = useCallback((sectionId) => {
-    setActiveSection(sectionId);
+  return (
+    <SectionNavContext.Provider value={value}>
+      {children}
+    </SectionNavContext.Provider>
+  );
+}
 
-    const nextHash = `#${sectionId}`;
-    if (window.location.hash !== nextHash) {
-      window.history.replaceState(null, "", nextHash);
-    }
-  }, []);
+export function SectionNav({ navigation, onNavigate }) {
+  const sectionNav = useContext(SectionNavContext);
 
-  useEffect(() => {
-    const sectionIds = navigation.map((item) => item.href.slice(1));
-    const currentSection = window.location.hash.slice(1);
+  if (!sectionNav) {
+    throw new Error("SectionNav must be rendered inside SectionNavProvider");
+  }
 
-    if (!sectionIds.includes(currentSection)) {
-      window.history.replaceState(null, "", `#${defaultSection}`);
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visibleSection = entries.find((entry) => entry.isIntersecting);
-
-        if (visibleSection) {
-          activateSection(visibleSection.target.id);
-        }
-      },
-      {
-        rootMargin: "-20% 0px -70% 0px",
-        threshold: 0
-      }
-    );
-
-    sectionIds.forEach((sectionId) => {
-      observer.observe(document.getElementById(sectionId));
-    });
-
-    return () => observer.disconnect();
-  }, [activateSection, navigation]);
+  const { activeSection } = sectionNav;
 
   return (
     <nav className="mt-16" aria-label="Page sections">
@@ -64,7 +45,24 @@ export function SectionNav({ navigation }) {
                 )}
                 href={item.href}
                 aria-current={isActive ? "location" : undefined}
-                onClick={() => activateSection(sectionId)}
+                onClick={(event) => {
+                  event.preventDefault();
+
+                  if (onNavigate) {
+                    onNavigate(sectionId);
+                    return;
+                  }
+
+                  const section = document.getElementById(sectionId);
+                  const reduceMotion = window.matchMedia(
+                    "(prefers-reduced-motion: reduce)"
+                  ).matches;
+
+                  section?.scrollIntoView({
+                    behavior: reduceMotion ? "auto" : "smooth",
+                    block: "start"
+                  });
+                }}
               >
                 <span
                   className={cn(

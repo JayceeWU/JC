@@ -1,5 +1,6 @@
 .agents/
 skills-lock.json
+.playwright-cli
 
 node_modules/
 .next/

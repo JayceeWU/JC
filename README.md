@@ -11,11 +11,7 @@
 
 ## Local Development
 
-Create `.env`
-
-```env
-NEXT_PUBLIC_SITE_URL=http://localhost:3000
-```
+Create `.env` from `.env.example`. `npm run dev` also falls back to `http://localhost:3000` when `NEXT_PUBLIC_SITE_URL` is missing, but keeping `.env` in place makes local metadata match the expected environment contract.
 
 Requires Node.js 22 or newer.
 
@@ -28,7 +24,14 @@ Open `http://localhost:3000` after the development server starts.
 
 ## Environment Variables
 
-`NEXT_PUBLIC_SITE_URL` is used for Next.js metadata and canonical URLs. The app intentionally has no localhost fallback, so configure this value in every environment, including Vercel and GitHub Actions.
+`NEXT_PUBLIC_SITE_URL` is used for Next.js metadata, canonical URLs, and Open Graph URLs.
+
+Current environment policy:
+
+- Local development: set `NEXT_PUBLIC_SITE_URL=http://localhost:3000` in `.env`; missing values fall back to `http://localhost:3000` only when `NODE_ENV=development`.
+- GitHub Actions: the CI job is bound to the GitHub `dev` Environment and reads `NEXT_PUBLIC_SITE_URL` from that Environment's variables.
+- Vercel Preview: set `NEXT_PUBLIC_SITE_URL` in the Vercel Preview environment once preview deployments are connected.
+- Vercel Production: set `NEXT_PUBLIC_SITE_URL` to the final production domain before deploying from `main`.
 
 ## Quality Checks
 
@@ -48,7 +51,7 @@ app/
   page.js          # Server-rendered portfolio page
   globals.css      # Design tokens, responsive behavior, and accessibility styles
 components/
-  site/            # Sidebar, sections, journey, projects, and pointer glow
+  site/            # Sidebar, section navigation, journey, projects, and pointer glow
   ui/              # Reusable Shadcn-style primitives
 lib/
   portfolio-data.js # Profile, social links, journey, and project content
@@ -59,6 +62,20 @@ public/
 ## CI/CD and Deployment
 
 GitHub Actions runs `npm ci`, linting, duplicate-code detection, and a production build on every branch push and on pull requests targeting `main`.
+
+The CI job currently uses the GitHub `dev` Environment:
+
+```yaml
+environment: dev
+env:
+  NEXT_PUBLIC_SITE_URL: ${{ vars.NEXT_PUBLIC_SITE_URL }}
+```
+
+In GitHub, configure this under `Settings -> Environments -> dev -> Environment variables`:
+
+```text
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
+```
 
 To deploy:
 
