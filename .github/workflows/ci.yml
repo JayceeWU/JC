@@ -15,9 +15,9 @@ concurrency:
 jobs:
   lint-and-build:
     runs-on: ubuntu-latest
-    environment: Configure NEXT_PUBLIC_SITE_URL
+    environment: dev
     env:
-      NEXT_PUBLIC_SITE_URL: ${{ vars.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000' }}
+      NEXT_PUBLIC_SITE_URL: ${{ vars.NEXT_PUBLIC_SITE_URL }}
 
     steps:
       - name: Checkout
