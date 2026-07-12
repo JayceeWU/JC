@@ -15,6 +15,9 @@ concurrency:
 jobs:
   lint-and-build:
     runs-on: ubuntu-latest
+    environment: Configure NEXT_PUBLIC_SITE_URL
+    env:
+      NEXT_PUBLIC_SITE_URL: ${{ vars.NEXT_PUBLIC_SITE_URL }}
 
     steps:
       - name: Checkout
