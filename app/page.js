@@ -6,7 +6,6 @@ import {
   about,
   journey,
   navigation,
-  profile,
   projects,
   socials
 } from "@/lib/portfolio-data";
@@ -18,9 +17,8 @@ export default function HomePage() {
         Skip to content
       </a>
       <PointerGlow />
-      <div className="relative z-10 mx-auto grid min-h-screen min-w-[1024px] max-w-[1440px] grid-cols-[38.2fr_61.8fr] gap-12 px-12 xl:gap-20 xl:px-20">
+      <div className="relative z-10 mx-auto grid min-h-screen min-w-[1024px] max-w-[1440px] grid-cols-[3fr_7fr] gap-12 px-12 xl:gap-20 xl:px-20">
         <Sidebar
-          profile={profile}
           navigation={navigation}
           socials={socials}
         />
