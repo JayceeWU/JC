@@ -1,8 +1,10 @@
 .agents/
+skills-lock.json
 
 node_modules/
 .next/
 out/
+output/
 build/
 dist/
 coverage/
