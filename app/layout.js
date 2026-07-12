@@ -7,7 +7,15 @@ const inter = Inter({
   variable: "--font-body"
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  (process.env.NODE_ENV === "development" ? "http://localhost:3000" : undefined);
+
+if (!siteUrl) {
+  throw new Error(
+    "NEXT_PUBLIC_SITE_URL is required in production/CI for metadataBase"
+  );
+}
 
 export const metadata = {
   metadataBase: new URL(siteUrl),
