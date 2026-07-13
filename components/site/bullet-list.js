@@ -1,6 +1,10 @@
 import { cn } from "@/lib/utils";
 
-export function BulletList({ items, className }) {
+function getItemKey(item) {
+  return typeof item === "string" ? item : item.label;
+}
+
+export function BulletList({ items, className, renderItem }) {
   return (
     <ul
       className={cn(
@@ -9,12 +13,12 @@ export function BulletList({ items, className }) {
       )}
     >
       {items.map((item) => (
-        <li key={item} className="relative pl-4">
+        <li key={getItemKey(item)} className="relative pl-4">
           <span
             className="absolute left-0 top-[0.7em] size-1 rounded-full bg-primary/70"
             aria-hidden="true"
           />
-          {item}
+          {renderItem ? renderItem(item) : item}
         </li>
       ))}
     </ul>
