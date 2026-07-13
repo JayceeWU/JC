@@ -54,11 +54,16 @@ export function SectionNav({ navigation, onNavigate }) {
                   }
 
                   const section = document.getElementById(sectionId);
+                  const scrollTarget =
+                    sectionId === "about"
+                      ? section
+                      : section?.querySelector("[data-section-scroll-target]") ??
+                        section;
                   const reduceMotion = window.matchMedia(
                     "(prefers-reduced-motion: reduce)"
                   ).matches;
 
-                  section?.scrollIntoView({
+                  scrollTarget?.scrollIntoView({
                     behavior: reduceMotion ? "auto" : "smooth",
                     block: "start"
                   });
