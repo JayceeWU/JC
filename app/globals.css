@@ -157,6 +157,90 @@
   .mobile-portfolio-content[data-drawer-instant="true"] {
     transition: none;
   }
+
+  .reports-dialog-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 70;
+    background:
+      radial-gradient(
+        38rem circle at var(--pointer-x) var(--pointer-y),
+        hsl(var(--primary) / 0.12),
+        transparent 46%
+      ),
+      hsl(var(--background) / 0.84);
+    backdrop-filter: blur(10px);
+  }
+
+  .reports-dialog-content {
+    position: fixed;
+    inset: 0;
+    z-index: 80;
+    display: flex;
+    height: 100dvh;
+    width: 100vw;
+    flex-direction: column;
+    overflow: hidden;
+    border: 0;
+    background:
+      linear-gradient(
+        145deg,
+        hsl(var(--card) / 0.98),
+        hsl(var(--background-deep) / 0.99)
+      );
+    color: hsl(var(--card-foreground));
+    box-shadow: 0 30px 90px hsl(var(--background) / 0.7);
+    scrollbar-gutter: stable;
+    transform-origin: center;
+  }
+
+  .reports-dialog-overlay[data-state="open"] {
+    animation: reports-overlay-in 180ms ease-out;
+  }
+
+  .reports-dialog-overlay[data-state="closed"] {
+    animation: reports-overlay-out 150ms ease-in;
+  }
+
+  .reports-dialog-content[data-state="open"] {
+    animation: reports-dialog-in 200ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .reports-dialog-content[data-state="closed"] {
+    animation: reports-dialog-out 160ms ease-in;
+  }
+}
+
+@keyframes reports-overlay-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes reports-overlay-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes reports-dialog-in {
+  from {
+    opacity: 0;
+    scale: 0.985;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+@keyframes reports-dialog-out {
+  from {
+    opacity: 1;
+    scale: 1;
+  }
+  to {
+    opacity: 0;
+    scale: 0.985;
+  }
 }
 
 @media (min-width: 1024px) {
@@ -166,6 +250,18 @@
 
   .mobile-portfolio-content {
     transform: none;
+  }
+
+  .reports-dialog-content {
+    inset: auto;
+    left: 50%;
+    top: 50%;
+    height: min(85dvh, 52rem);
+    width: min(calc(100vw - 4rem), 64rem);
+    max-height: 85dvh;
+    transform: translate(-50%, -50%);
+    border: 1px solid hsl(var(--border));
+    border-radius: var(--radius);
   }
 }
 

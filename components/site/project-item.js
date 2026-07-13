@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import { BulletList } from "@/components/site/bullet-list";
-import { Badge } from "@/components/ui/badge";
+import { TechnologyBadges } from "@/components/site/technology-badges";
 
 export function ProjectItem({ project }) {
   return (
@@ -22,9 +22,10 @@ export function ProjectItem({ project }) {
             href={project.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="group/link inline-flex origin-left items-start gap-1.5 rounded-sm transition-transform duration-200 ease-out after:absolute after:inset-0 after:content-[''] group-hover:scale-[1.12] focus-visible:scale-[1.12]"
+            aria-label={`${project.title} project (opens in a new tab)`}
+            className="group/link flex w-full min-w-0 origin-left items-start gap-1.5 rounded-sm transition-transform duration-200 ease-out after:absolute after:inset-0 after:content-[''] lg:inline-flex lg:w-auto lg:group-hover:scale-[1.12] lg:focus-visible:scale-[1.12]"
           >
-            <span>{project.title}</span>
+            <span className="min-w-0 flex-1 lg:flex-none">{project.title}</span>
             <ArrowUpRight
               className="mt-0.5 size-5 shrink-0 origin-center stroke-[1.8] text-foreground transition-[color,stroke-width,transform] duration-200 ease-out group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:stroke-[2.8] group-hover:text-primary group-focus-visible/link:-translate-y-0.5 group-focus-visible/link:translate-x-0.5 group-focus-visible/link:stroke-[2.8] group-focus-visible/link:text-primary"
               aria-hidden="true"
@@ -35,11 +36,11 @@ export function ProjectItem({ project }) {
           {project.context}
         </p>
         <BulletList items={project.highlights} className="mt-4" />
-        <div className="mt-5 flex flex-wrap gap-2" aria-label="Technologies used">
-          {project.technologies.map((technology) => (
-            <Badge key={technology}>{technology}</Badge>
-          ))}
-        </div>
+        <TechnologyBadges
+          technologies={project.technologies}
+          ariaLabel="Technologies used in this project"
+          className="mt-5"
+        />
       </div>
     </article>
   );

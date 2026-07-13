@@ -67,7 +67,11 @@ function ProfileSurface({
       data-expanded={contextual ? drawerExpanded : undefined}
       data-instant={contextual ? drawerInstant : undefined}
       onTransitionEnd={contextual ? onDrawerTransitionEnd : undefined}
-      aria-label={contextual ? "Expanded profile and page navigation" : "Profile and page navigation"}
+      aria-label={
+        contextual
+          ? "Expanded profile and portfolio navigation"
+          : "Jaycee Wu profile and portfolio navigation"
+      }
     >
       {contextual ? (
         <button
@@ -75,7 +79,7 @@ function ProfileSurface({
           type="button"
           className="mobile-profile-toggle absolute right-3.5 flex size-10 items-center justify-center rounded-full"
           onClick={onClose}
-          aria-label="Collapse profile menu"
+          aria-label="Collapse profile and navigation"
         >
           <ChevronIcon expanded />
         </button>
@@ -577,8 +581,9 @@ export function MobilePortfolioShell({ navigation, socials, children }) {
           onClick={openDrawer}
           disabled={!isHeaderInteractive}
           tabIndex={isHeaderInteractive ? 0 : -1}
+          aria-label={`Open profile and navigation. Current section: ${activeSectionLabel}`}
           aria-expanded={isDrawerOpen}
-          aria-controls="mobile-profile-drawer"
+          aria-controls={isDrawerOpen ? "mobile-profile-drawer" : undefined}
         >
           <span className="flex items-baseline gap-3">
             <span className="text-base text-foreground">Jaycee</span>
