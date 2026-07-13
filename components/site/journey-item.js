@@ -1,6 +1,6 @@
 import { BulletList } from "@/components/site/bullet-list";
 import { ThinkTankReportsDialog } from "@/components/site/think-tank-reports-dialog";
-import { Badge } from "@/components/ui/badge";
+import { TechnologyBadges } from "@/components/site/technology-badges";
 
 function getDescriptionItems(item) {
   if (item.highlights) {
@@ -47,16 +47,11 @@ export function JourneyItem({ item }) {
             }
           />
         }
-        <ul
-          className="mt-4 flex flex-wrap gap-2"
-          aria-label="Skills and achievements"
-        >
-          {item.technologies.map((technology) => (
-            <li key={technology}>
-              <Badge>{technology}</Badge>
-            </li>
-          ))}
-        </ul>
+        <TechnologyBadges
+          technologies={item.technologies}
+          ariaLabel="Skills and achievements"
+          className="mt-4"
+        />
       </div>
     </article>
   );

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import { BulletList } from "@/components/site/bullet-list";
-import { Badge } from "@/components/ui/badge";
+import { TechnologyBadges } from "@/components/site/technology-badges";
 
 export function ProjectItem({ project }) {
   return (
@@ -36,16 +36,11 @@ export function ProjectItem({ project }) {
           {project.context}
         </p>
         <BulletList items={project.highlights} className="mt-4" />
-        <ul
-          className="mt-5 flex flex-wrap gap-2"
-          aria-label="Technologies used in this project"
-        >
-          {project.technologies.map((technology) => (
-            <li key={technology}>
-              <Badge>{technology}</Badge>
-            </li>
-          ))}
-        </ul>
+        <TechnologyBadges
+          technologies={project.technologies}
+          ariaLabel="Technologies used in this project"
+          className="mt-5"
+        />
       </div>
     </article>
   );
