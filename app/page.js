@@ -59,7 +59,7 @@ export default function HomePage() {
               <MobileSectionHeading>Journey</MobileSectionHeading>
               <div
                 className="-mx-3 divide-y divide-border/70 lg:-mx-5"
-                data-mobile-scroll-target
+                data-section-scroll-target
               >
                 {journey.map((item) => (
                   <JourneyItem
@@ -77,7 +77,7 @@ export default function HomePage() {
               <MobileSectionHeading>Projects</MobileSectionHeading>
               <div
                 className="-mx-3 divide-y divide-border/70 lg:-mx-5"
-                data-mobile-scroll-target
+                data-section-scroll-target
               >
                 {projects.map((project) => (
                   <ProjectItem key={project.title} project={project} />

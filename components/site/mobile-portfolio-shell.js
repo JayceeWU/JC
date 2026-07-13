@@ -242,7 +242,7 @@ export function MobilePortfolioShell({ navigation, socials, children }) {
     }
 
     const mobileScrollTarget = section.querySelector(
-      "[data-mobile-scroll-target]"
+      "[data-section-scroll-target]"
     );
 
     if (window.matchMedia(mobileQuery).matches && mobileScrollTarget) {
