@@ -11,7 +11,7 @@ const iconPaths = {
 
 export function SocialLinks({ socials }) {
   return (
-    <ul className="flex items-center gap-3" aria-label="Social profiles">
+    <ul className="flex items-center gap-3" aria-label="Social media profiles">
       {socials.map((social) => {
         return (
           <li key={social.label} className="relative">
@@ -20,7 +20,7 @@ export function SocialLinks({ socials }) {
               href={social.href}
               target="_blank"
               rel="noreferrer"
-              aria-label={social.label}
+              aria-label={`${social.label} profile (opens in a new tab)`}
             >
               <svg
                 className="size-5 fill-current"

@@ -28,7 +28,7 @@ export function SectionNav({ navigation, onNavigate }) {
   const { activeSection } = sectionNav;
 
   return (
-    <nav className="mt-16" aria-label="Page sections">
+    <nav className="mt-16" aria-label="Portfolio sections">
       <ul className="flex flex-col items-start gap-4">
         {navigation.map((item) => {
           const sectionId = item.href.slice(1);

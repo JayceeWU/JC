@@ -22,6 +22,7 @@ export function ProjectItem({ project }) {
             href={project.href}
             target="_blank"
             rel="noopener noreferrer"
+            aria-label={`${project.title} project (opens in a new tab)`}
             className="group/link inline-flex origin-left items-start gap-1.5 rounded-sm transition-transform duration-200 ease-out after:absolute after:inset-0 after:content-[''] group-hover:scale-[1.12] focus-visible:scale-[1.12]"
           >
             <span>{project.title}</span>
@@ -35,11 +36,16 @@ export function ProjectItem({ project }) {
           {project.context}
         </p>
         <BulletList items={project.highlights} className="mt-4" />
-        <div className="mt-5 flex flex-wrap gap-2" aria-label="Technologies used">
+        <ul
+          className="mt-5 flex flex-wrap gap-2"
+          aria-label="Technologies used in this project"
+        >
           {project.technologies.map((technology) => (
-            <Badge key={technology}>{technology}</Badge>
+            <li key={technology}>
+              <Badge>{technology}</Badge>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </article>
   );

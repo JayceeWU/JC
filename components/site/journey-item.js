@@ -47,11 +47,16 @@ export function JourneyItem({ item }) {
             }
           />
         }
-        <div className="mt-4 flex flex-wrap gap-2" aria-label="Relevant topics">
+        <ul
+          className="mt-4 flex flex-wrap gap-2"
+          aria-label="Skills and achievements"
+        >
           {item.technologies.map((technology) => (
-            <Badge key={technology}>{technology}</Badge>
+            <li key={technology}>
+              <Badge>{technology}</Badge>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </article>
   );

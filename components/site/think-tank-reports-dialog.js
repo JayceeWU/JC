@@ -10,6 +10,16 @@ import {
   DialogTrigger
 } from "@/components/ui/dialog";
 
+function getReportGroupHeadingId(title) {
+  const slug = title
+    .toLowerCase()
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+
+  return `report-group-${slug}`;
+}
+
 function ReportTitle({ report }) {
   const titleContent = (
     <>
@@ -30,6 +40,7 @@ function ReportTitle({ report }) {
         href={report.href}
         target="_blank"
         rel="noopener noreferrer"
+        aria-label={`${report.title} report (opens in a new tab)`}
         className="group/report inline-flex items-start gap-1.5 font-semibold leading-snug text-foreground transition-colors duration-200 hover:text-primary"
       >
         {titleContent}
@@ -100,16 +111,13 @@ export function ThinkTankReportsDialog({ label, groups }) {
         </button>
       </DialogTrigger>
 
-      <DialogContent aria-describedby="think-tank-reports-description">
+      <DialogContent>
         <header className="flex shrink-0 items-start justify-between gap-6 border-b border-border px-6 pb-5 pt-[calc(1.25rem+env(safe-area-inset-top))] lg:px-8 lg:pt-6">
           <div>
             <DialogTitle className="text-balance text-2xl font-bold tracking-tight text-foreground lg:text-3xl">
               Think Tank Reports
             </DialogTitle>
-            <DialogDescription
-              id="think-tank-reports-description"
-              className="mt-2 text-sm leading-relaxed text-muted-foreground"
-            >
+            <DialogDescription className="mt-2 text-sm leading-relaxed text-muted-foreground">
               {reportCount} reports spanning financial markets, economic policy,
               and recurring research publications.
             </DialogDescription>
@@ -127,11 +135,14 @@ export function ThinkTankReportsDialog({ label, groups }) {
 
         <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-6 pb-[calc(2rem+env(safe-area-inset-bottom))] pt-7 lg:px-8 lg:pb-8">
           <div className="space-y-10">
-            {groups.map((group) => (
-              <section key={group.title} aria-labelledby={`report-group-${group.title}`}>
+            {groups.map((group) => {
+              const headingId = getReportGroupHeadingId(group.title);
+
+              return (
+              <section key={group.title} aria-labelledby={headingId}>
                 <div className="mb-5 flex items-center justify-between gap-4 border-b border-border/80 pb-3">
                   <h3
-                    id={`report-group-${group.title}`}
+                    id={headingId}
                     className="text-xs font-bold uppercase tracking-[0.2em] text-primary"
                   >
                     {group.title}
@@ -149,7 +160,8 @@ export function ThinkTankReportsDialog({ label, groups }) {
                   ))}
                 </ul>
               </section>
-            ))}
+              );
+            })}
           </div>
         </div>
       </DialogContent>
